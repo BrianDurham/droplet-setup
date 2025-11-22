@@ -1,0 +1,184 @@
+    1  date
+    2  time apt update && apt upgrade && apt dist-upgrade
+    3  nvidia-smi
+    4  apt install fastfetch
+    5  apt install neofetch
+    6  neofetch
+    7  btop
+    8  apt install btop
+    9  btop
+   10  cat > whisper.sh
+   11  vi whisper.sh 
+   12  apt install nvim
+   13  apt install neovim
+   14  reboot
+   15  ls -ltr
+   16  chmod 777 whisper.sh
+   17  vi whisper.sh
+   18  ./whisper.sh 
+   19  ls -al
+   20  cd whisper-lab/
+   21  ls -al
+   22  cd whisper.cpp/
+   23  ls -al
+   24  pwd
+   25  make
+   26  apt-get update
+   27  apt-get install -y cmake
+   28  cd /root/whisper-lab/whisper.cpp
+   29  # Grab a small model
+   30  bash ./models/download-ggml-model.sh base.en
+   31  # Configure with CUDA
+   32  cmake -B build -DGGML_CUDA=1
+   33  # Compile
+   34  cmake --build build -j"$(nproc)" --config Releasecd /root/whisper-lab/whisper.cpp
+   35  # Grab a small model
+   36  bash ./models/download-ggml-model.sh base.en
+   37  # Configure with CUDA
+   38  cmake -B build -DGGML_CUDA=1
+   39  # Compile
+   40  cmake --build build -j"$(nproc)" --config Release
+   41  apt-get update
+   42  apt-get install -y nvidia-cuda-toolkit
+   43  cmake --build build -j"$(nproc)" --config Release
+   44  ls -al
+   45  cmake --build build -j"$(nproc)" --config Release
+   46  history
+   47  cd /root/whisper-lab/whisper.cpp
+   48  # Grab a small model
+   49  bash ./models/download-ggml-model.sh base.en
+   50  # Configure with CUDA
+   51  cmake -B build -DGGML_CUDA=1
+   52  # Compile
+   53  cmake --build build -j"$(nproc)" --config Release
+   54  cat /etc/*release*
+   55  cd /root/whisper-lab/whisper.cpp
+   56  apt-get update
+   57  apt-get install -y build-essential cmake ffmpeg
+   58  # This downloads base.en, configures CMake, builds, and runs a sample.
+   59  make -j"$(nproc)" base.en
+   60  cat /etc/*release*
+   61  cd /root/whisper-lab/whisper.cpp
+   62  # Clean out the old CMake build dir
+   63  rm -rf build
+   64  # Make sure cmake is installed
+   65  apt-get update
+   66  apt-get install -y cmake ffmpeg
+   67  # CPU-only configuration
+   68  cmake -B build -DGGML_CUDA=0
+   69  # Build (no CUDA)
+   70  cmake --build build -j"$(nproc)" --config Release
+   71  # Download the base English model (if not already present)
+   72  bash ./models/download-ggml-model.sh base.en
+   73  # Quick sanity check
+   74  ./build/bin/whisper-cli -h
+   75  curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o ~/.local/bin/yt-dlp
+   76  chmod a+rx ~/.local/bin/yt-dlp  # Make executable
+   77  wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O ~/.local/bin/yt-dlp
+   78  chmod a+rx ~/.local/bin/yt-dlp  # Make executable
+   79  wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /root/bin/yt-dlp
+   80  curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp
+   81  curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp yt-dlp
+   82  ls -ltr
+   83  wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/bin/yt-dlp
+   84  cd ~
+   85  yt-dlp https://youtu.be/SqzxjINsbfQ
+   86  chmod 777 /usr/bin/yt-dlp
+   87  yt-dlp https://youtu.be/SqzxjINsbfQ
+   88  ls -ltr
+   89  ffmpeg 'Early 80s pgm. 13： Odd Ring Tones, A Remote New York City Dialtone, Time Announcements, 1981 - 1983 [SqzxjINsbfQ].mkv' Early.mp3
+   90  ffmpeg -i 'Early 80s pgm. 13： Odd Ring Tones, A Remote New York City Dialtone, Time Announcements, 1981 - 1983 [SqzxjINsbfQ].mkv' Early.mp3
+   91  cd -
+   92  ls -al
+   93  whisper
+   94  find . -name "whisper"
+   95  cd build
+   96  ls -al
+   97  ls -al bin
+   98  time ./whisper-cli ~/Early.mp3
+   99  time bin/whisper-cli ~/Early.mp3
+  100  bin/whisper-clit
+  101  bin/whisper-cli
+  102  time /root/whisper-lab/whisper.cpp/build/bin/whisper-cli   -m /root/whisper-lab/whisper.cpp/models/ggml-base.en.bin   -f ~/Early.mp3   -otxt -osrt   -of early
+  103  cd ~
+  104  # apt deps
+  105  apt-get install -y python3 python3-pip python3-venv ffmpeg git curl wget
+  106  # venv + GPU whisper
+  107  python3 -m venv /opt/whisper-venv
+  108  source /opt/whisper-venv/bin/activate
+  109  pip install --upgrade pip
+  110  pip install torch --index-url https://download.pytorch.org/whl/cu121
+  111  pip install openai-whisper
+  112  source /opt/whisper-venv/bin/activate
+  113  time python whisper_gpu.py ~/Early.mp3 -m small
+  114  # apt deps
+  115  apt-get install -y python3 python3-pip python3-venv ffmpeg git curl wget
+  116  # venv + GPU whisper
+  117  python3 -m venv /opt/whisper-venv
+  118  source /opt/whisper-venv/bin/activate
+  119  pip install --upgrade pip
+  120  pip install torch --index-url https://download.pytorch.org/whl/cu121
+  121  pip install openai-whisper
+  122  # transcribe (GPU)
+  123  source /opt/whisper-venv/bin/activate
+  124  python whisper_gpu.py input.wav -m small
+  125  which whisper
+  126  whisper -v
+  127  ls -al *.sh
+  128  ls -ltr *.py
+  129  vi whisper.sh
+  130  cat << 'EOF' > /root/whisper_gpu.py
+#!/usr/bin/env python3
+import argparse
+import os
+import whisper
+import torch
+
+def main():
+    parser = argparse.ArgumentParser(description="GPU Whisper client (PyTorch)")
+    parser.add_argument("audio", help="Path to audio file (wav/mp3/mp4/etc)")
+    parser.add_argument("-m", "--model", default=os.environ.get("WHISPER_MODEL", "base"),
+                        help="Model name: tiny, base, small, medium, large, large-v2, large-v3")
+    parser.add_argument("-l", "--language", default="en",
+                        help="Language code (default: en)")
+    parser.add_argument("-o", "--output", help="Output text file (default: audio.txt)")
+    args = parser.parse_args()
+
+    if not torch.cuda.is_available():
+        raise SystemExit("CUDA is not available, but this script is meant to use the GPU.")
+
+    device = "cuda"
+    print(f"Loading model '{args.model}' on {device}...")
+    model = whisper.load_model(args.model).to(device)
+
+    print(f"Transcribing {args.audio}...")
+    result = model.transcribe(args.audio, language=args.language, fp16=True)
+
+    out_txt = args.output or (os.path.splitext(args.audio)[0] + ".txt")
+    with open(out_txt, "w", encoding="utf-8") as f:
+        f.write(result["text"].strip() + "\n")
+
+    print(f"Wrote transcript to {out_txt}")
+
+if __name__ == "__main__":
+    main()
+EOF
+
+  131  chmod +x /root/whisper_gpu.py
+  132  ls -ltr
+  133  history | grep gpu
+  134  time python whisper_gpu.py ~/Early.mp3 -m small
+  135  vi Early.txt
+  136  cat > /usr/local/bin/whisper_gpu
+  137  chmod 777 /usr/local/bin/whisper_gpu 
+  138  ls -al
+  139  rm Early.txt
+  140  whisper_gpu Early.mp3
+  141  vi /usr/local/bin/whisper_gpu 
+  142  source /root/whisper-venv/bin/activate
+  143  time whisper_gpu Early.mp3
+  144  ls -ltr
+  145  vi Early*
+  146  ls -ltr
+  147  history
+  148  history > history.txt

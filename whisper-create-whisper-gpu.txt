@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# -------- CONFIG --------
+WHISPER_PY="${WHISPER_PY:-/root/whisper-venv/bin/python}"
+MODEL="${MODEL:-small}"          # default model
+DEVICE="${DEVICE:-cuda}"         # always GPU when available
+WORDTS="${WORDTS:-false}"        # set TRUE for word-level timestamps
+
+# -------- ARGS ----------
+if [ "$#" -lt 1 ]; then
+    echo "Usage: whisper_gpu <input_audio> [output_basename]"
+    echo "Example: whisper_gpu meeting.wav"
+    exit 1
+fi
+
+INPUT="$1"
+BASE="${2:-$(basename "$INPUT" | sed 's/\.[^.]*$//')}"
+
+# -------- RUN ----------
+echo "=> GPU Whisper running"
+echo "   Model:   $MODEL"
+echo "   Device:  $DEVICE"
+echo "   Input:   $INPUT"
+echo "   Output:  $BASE.*"
+
+$WHISPER_PY -m whisper "$INPUT" \
+    --model "$MODEL" \
+    --device "$DEVICE" \
+    --output_format all \
+    $( [ "$WORDTS" = "true" ] && echo "--word_timestamps True" )
+
+# Rename outputs to clean client-friendly names
+[ -f "$BASE.txt" ]  || mv "${INPUT}.txt"   "$BASE.txt"
+[ -f "$BASE.srt" ]  || mv "${INPUT}.srt"   "$BASE.srt"
+[ -f "$BASE.vtt" ]  || mv "${INPUT}.vtt"   "$BASE.vtt"
+[ -f "$BASE.json" ] || mv "${INPUT}.json"  "$BASE.json"
+
+echo "=> Done!"
+echo "Files generated:"
+echo "  $BASE.txt"
+echo "  $BASE.srt"
+echo "  $BASE.vtt"
+echo "  $BASE.json"

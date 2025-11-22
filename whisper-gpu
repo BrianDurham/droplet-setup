@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+WHISPER_PY="${WHISPER_PY:-$(command -v python3)}"
+MODEL="${MODEL:-small}"
+DEVICE="${DEVICE:-cuda}"
+WORDTS="${WORDTS:-false}"
+
+if [ "$#" -lt 1 ]; then
+    echo "Usage: whisper_gpu <input_audio> [output_basename]"
+    exit 1
+fi
+
+INPUT="$1"
+BASE="${2:-$(basename "$INPUT" | sed 's/\.[^.]*$//')}"
+
+echo "=> GPU Whisper running"
+echo "   Model:   $MODEL"
+echo "   Device:  $DEVICE"
+echo "   Input:   $INPUT"
+echo "   Output:  $BASE.*"
+
+$WHISPER_PY -m whisper "$INPUT" \
+    --model "$MODEL" \
+    --device "$DEVICE" \
+    --output_format all \
+    $( [ "$WORDTS" = "true" ] && echo "--word_timestamps True" )
+
+[ -f "$BASE.txt" ]  || mv "${INPUT}.txt"   "$BASE.txt"    2>/dev/null || true
+[ -f "$BASE.srt" ]  || mv "${INPUT}.srt"   "$BASE.srt"    2>/dev/null || true
+[ -f "$BASE.vtt" ]  || mv "${INPUT}.vtt"   "$BASE.vtt"    2>/dev/null || true
+[ -f "$BASE.json" ] || mv "${INPUT}.json"  "$BASE.json"   2>/dev/null || true
+
+echo "=> Done!"
+echo "  $BASE.txt"
+echo "  $BASE.srt"
+echo "  $BASE.vtt"
+echo "  $BASE.json"
+
